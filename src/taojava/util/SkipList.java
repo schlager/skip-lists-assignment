@@ -1,6 +1,8 @@
 package taojava.util;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
 /**
  * A randomized implementation of sorted lists.  
@@ -11,9 +13,15 @@ import java.util.Iterator;
 public class SkipList<T extends Comparable<T>>
     implements SortedList<T>
 {
+  
+  
   // +--------+----------------------------------------------------------
   // | Fields |
   // +--------+
+
+  Node<T> header;
+  double p;
+  int maxLevel;
 
   // +------------------+------------------------------------------------
   // | Internal Classes |
@@ -22,7 +30,8 @@ public class SkipList<T extends Comparable<T>>
   /**
    * Nodes for skip lists.
    */
-  public class Node
+  @SuppressWarnings("hiding")
+  public class Node<T>
   {
     // +--------+--------------------------------------------------------
     // | Fields |
@@ -32,16 +41,46 @@ public class SkipList<T extends Comparable<T>>
      * The value stored in the node.
      */
     T val;
+    int level;
+    Node<T>[] next;
+
+    public Node(T i, int n)
+    {
+      val = i;
+      level = n;
+      next = new Node[n];
+
+      for (int j = 0; j < n; j++)
+        next[j] = null;
+    }
   } // class Node
 
   // +--------------+----------------------------------------------------
   // | Constructors |
-  // +--------------+
+  // +--------------+  
+
+  public SkipList()
+  {
+    this.header = new Node<T>(null, maxLevel);
+    this.p = .5;
+    maxLevel = 20;
+  }
 
   // +-------------------------+-----------------------------------------
   // | Internal Helper Methods |
   // +-------------------------+
-
+  
+  private int randomLevel(){
+    
+    int level = 0;
+    Random random = new Random();
+    
+    while (random.nextInt() % 2 != 0)
+      level++;
+    
+    return Math.min(level, this.maxLevel);
+  }
+  
   // +-----------------------+-------------------------------------------
   // | Methods from Iterable |
   // +-----------------------+
@@ -51,10 +90,38 @@ public class SkipList<T extends Comparable<T>>
    * method) that iterates the values of the list from smallest to
    * largest.
    */
+
   public Iterator<T> iterator()
   {
-    // STUB
-    return null;
+    // We use a wrapper/adapter class, even though we currently
+    // don't do any adaptations, because we might eventually 
+    // find it useful to adapt.
+    return new Iterator<T>()
+      {
+        Node cursor = SkipList.this.header;
+        
+        int pos;
+
+        public boolean hasNext()
+        {
+          return this.cursor.next != null;
+        } // next()
+
+        public T next()
+        {
+          if (!this.hasNext())
+            throw new NoSuchElementException();
+          
+          this.pos++;
+          this.cursor = this.cursor.next[0];
+          return (T) this.cursor.val;
+        } // hasNext()
+
+        public void remove()
+        {
+          throw new UnsupportedOperationException();
+        } // remove()
+      }; // new Iterator<T>
   } // iterator()
 
   // +------------------------+------------------------------------------
@@ -68,9 +135,31 @@ public class SkipList<T extends Comparable<T>>
    * @post For all lav != val, if contains(lav) held before the call
    *   to add, contains(lav) continues to hold.
    */
+  @SuppressWarnings("unchecked")
   public void add(T val)
   {
-    // STUB
+    if (val == null)
+      throw new UnsupportedOperationException();
+    
+    Node<T> newNode;
+    Node<T> current = this.header;
+    int newLevel;
+    
+    for (int i = this.header.level; i >= 0; i--){
+      while (current.next[i] != null &&
+          current.next[i].val.compareTo(val) < 0){
+        current = current.next[i];
+      }
+    }
+    
+    current = current.next[0];
+    newLevel = randomLevel();
+    newNode = new Node(val, newLevel);
+    
+    for (int i = 0; i < newLevel; i++){
+      newNode.next[i] = current.next[i]; 
+      current.next[i] = newNode;
+    }
   } // add(T val)
 
   /**
@@ -118,6 +207,5 @@ public class SkipList<T extends Comparable<T>>
     // STUB
     return 0;
   } // length()
-
 
 } // class SkipList<T>

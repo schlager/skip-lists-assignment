@@ -70,7 +70,7 @@ public class SkipList<T extends Comparable<T>>
   
   private int randomLevel(){
     
-    int level = 0;
+    int level = 1;
     Random random = new Random();
     
     while (random.nextInt() % 2 != 0)
@@ -138,22 +138,24 @@ public class SkipList<T extends Comparable<T>>
     if (val == null)
       throw new UnsupportedOperationException();
     
+    Node<T>[] update = new Node[this.maxLevel];
     Node<T> newNode;
     Node<T> current = this.header;
     int newLevel;
     
-    for (int level = this.header.level; level >= 0; level--){
+    for (int level = this.header.level - 1; level >= 0; level--){
       while (current.next[level] != null &&
           current.next[level].val.compareTo(val) < 0)
         current = current.next[level];
+      update[level] = current;
     }
     
     newLevel = randomLevel();
     newNode = new Node<T>(val, newLevel);
     
-    for (int level = 0; level <= newLevel; level++){
-      newNode.next[level] = current.next[level]; 
-      current.next[level] = newNode;
+    for (int level = 0; level < newLevel; level++){
+      newNode.next[level] = update[level].next[level]; 
+      update[level].next[level] = newNode;
     }
   } // add(T val)
 
@@ -167,7 +169,7 @@ public class SkipList<T extends Comparable<T>>
 
     Node<T> current = this.header;
     
-    for (int level = this.header.level; level >= 0; level--){
+    for (int level = this.header.level - 1; level >= 0; level--){
       while (current.next[level] != null
           && val.compareTo(current.next[level].val) >= 0)
         current = current.next[level];
@@ -186,7 +188,29 @@ public class SkipList<T extends Comparable<T>>
    */
   public void remove(T val)
   {
-    // STUB
+    if (val == null)
+      throw new UnsupportedOperationException();
+    
+    Node<T>[] update = new Node[this.maxLevel];
+    Node<T> current = this.header;
+    
+    for (int level = this.header.level - 1; level >= 0; level--){
+      while (current.next[level] != null &&
+          current.next[level].val.compareTo(val) < 0)
+        current = current.next[level];
+      update[level] = current;
+    }
+    
+    if (current.next[0] != null){ 
+      current = current.next[0];
+      if (current.val.compareTo(val) == 0){
+        for (int level = 0; level < this.maxLevel; level++){
+          if (update[level].next[level].val.compareTo(val) != 0)
+            break;
+          update[level].next[level] = current.next[level];
+        }
+      }
+    }
   } // remove(T)
 
   // +--------------------------+----------------------------------------

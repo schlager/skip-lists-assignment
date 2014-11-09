@@ -148,7 +148,6 @@ public class SkipList<T extends Comparable<T>>
         current = current.next[level];
     }
     
-    current = current.next[0];
     newLevel = randomLevel();
     newNode = new Node<T>(val, newLevel);
     

@@ -209,7 +209,7 @@ public class SkipList<T extends Comparable<T>>
     
     if (current != null && current.val.compareTo(val) == 0)
       {
-        for (int level = 0; level < this.maxLevel; level++)
+        for (int level = 0; level < current.level; level++)
           {
             if (update[level].next[level] != current)
               break;

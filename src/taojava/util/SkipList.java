@@ -20,7 +20,6 @@ public class SkipList<T extends Comparable<T>>
   // +--------+
 
   Node<T> header;
-  double p;
   int maxLevel;
 
   // +------------------+------------------------------------------------
@@ -42,7 +41,7 @@ public class SkipList<T extends Comparable<T>>
      */
     T val;
     int level;
-    Node<T>[] next;
+    private Node<T>[] next;
 
     public Node(T i, int n)
     {
@@ -61,9 +60,8 @@ public class SkipList<T extends Comparable<T>>
 
   public SkipList()
   {
-    this.header = new Node<T>(null, maxLevel);
-    this.p = .5;
     maxLevel = 20;
+    this.header = new Node<T>(null, maxLevel);
   }
 
   // +-------------------------+-----------------------------------------
@@ -98,13 +96,13 @@ public class SkipList<T extends Comparable<T>>
     // find it useful to adapt.
     return new Iterator<T>()
       {
-        Node cursor = SkipList.this.header;
+        Node<T> cursor = SkipList.this.header;
         
         int pos;
 
         public boolean hasNext()
         {
-          return this.cursor.next != null;
+          return this.cursor.next[0] != null;
         } // next()
 
         public T next()
@@ -135,7 +133,6 @@ public class SkipList<T extends Comparable<T>>
    * @post For all lav != val, if contains(lav) held before the call
    *   to add, contains(lav) continues to hold.
    */
-  @SuppressWarnings("unchecked")
   public void add(T val)
   {
     if (val == null)
@@ -145,20 +142,19 @@ public class SkipList<T extends Comparable<T>>
     Node<T> current = this.header;
     int newLevel;
     
-    for (int i = this.header.level; i >= 0; i--){
-      while (current.next[i] != null &&
-          current.next[i].val.compareTo(val) < 0){
-        current = current.next[i];
-      }
+    for (int level = this.header.level; level >= 0; level--){
+      while (current.next[level] != null &&
+          current.next[level].val.compareTo(val) < 0)
+        current = current.next[level];
     }
     
     current = current.next[0];
     newLevel = randomLevel();
-    newNode = new Node(val, newLevel);
+    newNode = new Node<T>(val, newLevel);
     
-    for (int i = 0; i < newLevel; i++){
-      newNode.next[i] = current.next[i]; 
-      current.next[i] = newNode;
+    for (int level = 0; level <= newLevel; level++){
+      newNode.next[level] = current.next[level]; 
+      current.next[level] = newNode;
     }
   } // add(T val)
 
@@ -167,7 +163,18 @@ public class SkipList<T extends Comparable<T>>
    */
   public boolean contains(T val)
   {
-    // STUB
+    if (val == null)
+      return false;
+
+    Node<T> current = this.header;
+    
+    for (int level = this.header.level; level >= 0; level--){
+      while (current.next[level] != null
+          && val.compareTo(current.next[level].val) >= 0)
+        current = current.next[level];
+      if (val.equals(current.val))
+        return true;
+    }// for
     return false;
   } // contains(T)
 
@@ -195,7 +202,6 @@ public class SkipList<T extends Comparable<T>>
    */
   public T get(int i)
   {
-    // STUB
     return null;
   } // get(int)
 

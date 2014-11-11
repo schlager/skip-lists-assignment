@@ -20,6 +20,7 @@ public class SkipList<T extends Comparable<T>>
 
   Node<T> header;
   int maxLevel;
+  int size;
   double p;
 
   // +------------------+------------------------------------------------
@@ -62,6 +63,7 @@ public class SkipList<T extends Comparable<T>>
   {
     this.maxLevel = 20;
     this.p = .5;
+    this.size = 0;
     this.header = new Node<T>(null, maxLevel);
   }
   
@@ -69,6 +71,7 @@ public class SkipList<T extends Comparable<T>>
   {
     this.maxLevel = 20;
     this.p = pValue;
+    this.size = 0;
     this.header = new Node<T>(null, maxLevel);
   }
 
@@ -173,6 +176,7 @@ public class SkipList<T extends Comparable<T>>
         newNode.next[level] = update[level].next[level];
         update[level].next[level] = newNode;
       }
+    this.size++;
   } // add(T val)
 
   /**
@@ -230,6 +234,7 @@ public class SkipList<T extends Comparable<T>>
             update[level].next[level] = current.next[level];
           }
       }
+    this.size--;
   } // remove(T)
 
   // +--------------------------+----------------------------------------
@@ -244,7 +249,21 @@ public class SkipList<T extends Comparable<T>>
    */
   public T get(int i)
   {
-    return null;
+    if (i < 0 || i > this.size)
+      throw new IndexOutOfBoundsException();
+
+    Node<T> current = this.header;
+
+    for (int pos = 0; pos < i; pos++)
+      {
+        if (current.next[0] != null)
+          current = current.next[0];
+      }
+    
+    if (current == null)
+      return null;
+    
+    return current.val;
   } // get(int)
 
   /**
@@ -252,8 +271,7 @@ public class SkipList<T extends Comparable<T>>
    */
   public int length()
   {
-    // STUB
-    return 0;
+    return this.size;
   } // length()
 
 } // class SkipList<T>

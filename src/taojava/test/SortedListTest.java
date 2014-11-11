@@ -91,6 +91,45 @@ public class SortedListTest
   // +-------------+
 
   /**
+   * A simple test to check whether the SkipList.add method 
+   * deals with duplicate elements in the correct manner.
+   */
+  @Test
+  public void testDoubleAdd()
+  {
+    strings.add("11");
+    strings.add("11");
+    strings.remove("11");
+    assertFalse(strings.contains("11"));
+  } // testSomeRandomThing()
+  
+  /**
+   * A simple test to check whether or not the get method works correctly.
+   */
+  @Test
+  public void testGet()
+  {
+    strings.add("1");
+    strings.add("2");
+    strings.add("3");
+    strings.add("4");
+    strings.add("5");
+    System.out.println(strings.length());
+    assertEquals("3", strings.get(3));
+  } //  testGet()
+  
+  /**
+   * A test to determine whether the SkipList.length method works as desired.
+   */
+  @Test
+  public void testLength()
+  {
+    for (int i = 0; i < 10; i++)
+      strings.add(i + "");
+    assertEquals(10, strings.length());
+  } // testLength()
+  
+  /**
    * A really simple test.  Add an element and make sure that it's there.
    */
   @Test
@@ -139,15 +178,6 @@ public class SortedListTest
         fail("The instructions did not produce a sorted list.");
       } // if the elements are not in order.
   } // testOrdered()
-
-  @Test
-  public void testSomeRandomThing()
-  {
-    strings.add("11");
-    strings.add("11");
-    strings.remove("11");
-    assertFalse(strings.contains("11"));
-  } // testSomeRandomThing()
   
   /**
    * Verify that a randomly created list contains all the values

@@ -20,6 +20,7 @@ public class SkipList<T extends Comparable<T>>
 
   Node<T> header;
   int maxLevel;
+  double p;
 
   // +------------------+------------------------------------------------
   // | Internal Classes |
@@ -59,7 +60,15 @@ public class SkipList<T extends Comparable<T>>
 
   public SkipList()
   {
-    maxLevel = 20;
+    this.maxLevel = 20;
+    this.p = .5;
+    this.header = new Node<T>(null, maxLevel);
+  }
+  
+  public SkipList(int pValue)
+  {
+    this.maxLevel = 20;
+    this.p = pValue;
     this.header = new Node<T>(null, maxLevel);
   }
 
@@ -73,7 +82,7 @@ public class SkipList<T extends Comparable<T>>
     int level = 1;
     Random random = new Random();
 
-    while (random.nextInt() % 2 != 0)
+    while (random.nextDouble() < this.p)
       level++;
 
     return Math.min(level, this.maxLevel);
@@ -150,7 +159,12 @@ public class SkipList<T extends Comparable<T>>
           current = current.next[level];
         update[level] = current;
       }
-
+      
+    current = current.next[0];
+    
+    if (current != null && current.val.equals(val))
+      return;
+    
     newLevel = randomLevel();
     newNode = new Node<T>(val, newLevel);
 

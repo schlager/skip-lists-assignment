@@ -51,6 +51,7 @@ public class SortedListAnalyzer
       } // for
     adds1.stop();
 
+    /*
     // Grab the length (which may not be n)
     int len = sl.length();
 
@@ -61,6 +62,7 @@ public class SortedListAnalyzer
         sl.get(random.nextInt(len));
       } // for
     indices.stop();
+    */
 
     // Iterate
     iterate.start();
@@ -119,8 +121,8 @@ public class SortedListAnalyzer
         long[] round = analyze(sl, n);
         for (int i = 0; i < results.length; i++)
           results[i] += round[i];
-        pen.printf("Round %2d %8d%8d%8d%8d%8d%8d%8d\n", rep, round[1], round[2],
-                   round[3], round[4], round[5], round[6], round[0]);
+        pen.printf("Round %2d %8d%8d%8d%8d%8d%8d%8d\n", rep, round[1],
+                   round[2], round[3], round[4], round[5], round[6], round[0]);
       } // for (i)
     long[] averages = new long[7];
     for (int i = 0; i < results.length; i++)

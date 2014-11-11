@@ -140,6 +140,15 @@ public class SortedListTest
       } // if the elements are not in order.
   } // testOrdered()
 
+  @Test
+  public void testSomeRandomThing()
+  {
+    strings.add("11");
+    strings.add("11");
+    strings.remove("11");
+    assertFalse(strings.contains("11"));
+  } // testSomeRandomThing()
+  
   /**
    * Verify that a randomly created list contains all the values
    * we added to the list.

@@ -114,7 +114,6 @@ public class SortedListTest
     strings.add("3");
     strings.add("4");
     strings.add("5");
-    System.out.println(strings.length());
     assertEquals("3", strings.get(3));
   } //  testGet()
   
@@ -128,6 +127,51 @@ public class SortedListTest
       strings.add(i + "");
     assertEquals(10, strings.length());
   } // testLength()
+  
+  /**
+   * Tests whether remove, called twice, will have adverse effects on the SkipList
+   */
+  @Test
+  public void testRemove()
+  {
+    strings.add("11");
+    strings.add("12");
+    strings.remove("11");
+    strings.remove("11");
+    assertFalse(strings.contains("11"));
+    assertTrue(strings.contains("12"));
+  }
+  
+  /**
+   * 
+   */
+  @Test
+  public void testContains()
+  {
+    strings.add("11");
+    strings.add("12");
+    assertTrue(strings.contains("11"));
+    assertTrue(strings.contains("12"));
+    strings.remove("11");
+    assertFalse(strings.contains("11"));
+  }
+  
+  /**
+   * 
+   */
+  @Test
+  public void testEmpty()
+  {
+    try
+    {
+      strings.iterator().next();
+    }
+    catch (Exception e)
+    {
+      return;
+    }
+    fail("SkipList is empty");
+  }
   
   /**
    * A really simple test.  Add an element and make sure that it's there.

@@ -129,7 +129,7 @@ public class SkipList<T extends Comparable<T>>
 
         public void remove()
         {
-          throw new UnsupportedOperationException();
+          SkipList.this.remove(this.cursor.val);
         } // remove()
       }; // new Iterator<T>
   } // iterator()

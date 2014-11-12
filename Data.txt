@@ -71,29 +71,57 @@ SkipList
 	Average        22       0       1      29      18       6      71
 
 Analysis
-	Looking at overall performance we see that SkipList is significantly faster than either SortedArrayList or SortedLinkedList.  SortedLinkedList is incredibly slow, nearly 5 times as slow as SortedArrayList which is itself approximately 5 times slower than SkipList.  These differences in run times are due to a number of factors:
+	Looking at overall performance we see that SkipList is significantly 
+	faster than either SortedArrayList or SortedLinkedList.  SortedLinkedList 
+	is incredibly slow, nearly 5 times as slow as SortedArrayList which is 
+	itself approximately 5 times slower than SkipList.  These differences in 
+	run times are due to a number of factors:
 
 	add/1:
-		The times for add/1 are very similar for SkipList and SortedArrayList, ranging anywhere from 18 to 56 for SkipList and 39 to 65 for SortedArrayList.  SortedLinkedList is incredibly slow with times ranging from 319 - 509.
+		The times for add/1 are very similar for SkipList and SortedArrayList, 
+		ranging anywhere from 18 to 56 for SkipList and 39 to 65 for SortedArrayList.  
+		SortedLinkedList is incredibly slow with times ranging from 319 - 509.
 
 	add/2:
-		For SkipList, adding odds increased the run time by a very small amount in comparison to adding evens.  It even decreased run time by 15 in one case.  In general there was an increase of about 10.  SortedArrayList slowed down enormously in add/2 compared to add/1, increasing in run time by an average of 300%.  SortedLinkedList also increased by about 300%.
+		For SkipList, adding odds increased the run time by a very small amount in 
+		comparison to adding evens.  It even decreased run time by 15 in one case.  
+		In general there was an increase of about 10.  SortedArrayList slowed down 
+		enormously in add/2 compared to add/1, increasing in run time by an average 
+		of 300%.  SortedLinkedList also increased by about 300%.
 
 	remove/1:
-		SortedLinkedList removed elements amazingly fast with a minimum time of 1 and maximum time of 9.  SkipList stayed within the range of its run times for add/1 and add/2 with a maximum time of 34 and minimum time of 16.  SortedArrayList was by far the slowest with a run time of 9.5 times slower than that of SkipList.
+		SortedLinkedList removed elements amazingly fast with a minimum time of 1 
+		and maximum time of 9.  SkipList stayed within the range of its run times 
+		for add/1 and add/2 with a maximum time of 34 and minimum time of 16.  
+		SortedArrayList was by far the slowest with a run time of 9.5 times slower 
+		than that of SkipList.
 
 	remove/2:
-		The times for remove/2 were much faster in all procedures.  This is because we are just iterating through a list one element at a time, removing each element as we go, rather than selectively removing only odd elements from a mized List.
+		The times for remove/2 were much faster in all procedures.  This is because 
+		we are just iterating through a list one element at a time, removing each 
+		element as we go, rather than selectively removing only odd elements from 
+		a mized List.
 
 	Iterate:
-		The iteration times for SortedLinkedList and SortedArrayList were virtually identical with the majority of times being 0 and only one outlier above 1.  SkipList was noticibly slower with a run time hovering around 2.
+		The iteration times for SortedLinkedList and SortedArrayList were virtually 
+		identical with the majority of times being 0 and only one outlier above 1.  
+		SkipList was noticibly slower with a run time hovering around 2.
 
 	Situational Usage:
-		If we need indexing we cannot use our implementation of SkipList.  However, if we do not need indexing, there are a couple of different factors that determine our choice.  
+		If we need indexing we cannot use our implementation of SkipList.  However, 
+		if we do not need indexing, there are a couple of different factors that 
+		determine our choice.  
 
 		Indexing:
-			If we will mostly be using the remove procedure then SortedLinkedList is by far the most efficient.  For any other situation SortedArrayList is best.
+			If we will mostly be using the remove procedure then SortedLinkedList 
+			is by far the most efficient.  For any other situation SortedArrayList 
+			is best.
 
 		No Indexing:
-			Now we also have the choice of using SkipList.  Again, if we are mostly going to be using remove SortedLinkedList is best.  Otherwise SkipList is better than SortedArrayList in nearly every way.  The only other situation where SkipList wouldn't be as efficient, would be if you were just going to be iterating through the list.  In this case SortedArrayList would again be best.
+			Now we also have the choice of using SkipList.  Again, if we are mostly 
+			going to be using remove SortedLinkedList is best.  Otherwise SkipList is 
+			better than SortedArrayList in nearly every way.  The only other situation 
+			where SkipList wouldn't be as efficient, would be if you were just going to 
+			be iterating through the list.  In this case SortedArrayList would again be 
+			best.
 

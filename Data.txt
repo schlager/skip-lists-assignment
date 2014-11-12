@@ -1,5 +1,5 @@
 SortedLinkedList
-                 add/1   index iterate   add/2   rem/1   rem/2   total
+                    add/1   index iterate   add/2   rem/1   rem/2   total
 	Round  0      382       0       5    1014       9       4    1410
 	Round  1      378       0       1    1052       6       2    1437
 	Round  2      402       0       0     954       1       0    1357

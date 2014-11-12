@@ -104,6 +104,9 @@ public class SortedListTest
   } // testSomeRandomThing()
   
   /**
+   * This is a hypothetical test for the get method.
+   * Our get method is not implemented.
+   * 
    * A simple test to check whether or not the get method works correctly.
    */
   @Test
@@ -140,7 +143,7 @@ public class SortedListTest
     strings.remove("11");
     assertFalse(strings.contains("11"));
     assertTrue(strings.contains("12"));
-  }
+  } // testRemove()
   
   /**
    * 
@@ -154,10 +157,41 @@ public class SortedListTest
     assertTrue(strings.contains("12"));
     strings.remove("11");
     assertFalse(strings.contains("11"));
-  }
+    strings.add("11");
+    assertTrue(strings.contains("11"));
+  } // testContains()
   
   /**
-   * 
+   * Test to make sure that, after remove by iterator 1, 
+   * iterator 2 is recognized as invalid.
+   */
+  @Test
+  public void testIterator()
+  {
+    Iterator<String> it1 = strings.iterator();
+    Iterator<String> it2 = strings.iterator();
+    
+    for (int i = 0; i < 10; i++)
+      strings.add(1 + "");
+    
+    it1.next();
+    it2.next();
+    it1.remove();
+    
+    try
+    {
+      it2.next();
+    } // try
+    catch (Exception e)
+    {
+      return;
+    } // catch
+    fail("it2 is invalid");
+    
+  } // testIterator()
+  
+  /**
+   * Test to make sure an empty list is recognized as empty.
    */
   @Test
   public void testEmpty()
@@ -165,13 +199,13 @@ public class SortedListTest
     try
     {
       strings.iterator().next();
-    }
+    } // try
     catch (Exception e)
     {
       return;
-    }
+    } // catch
     fail("SkipList is empty");
-  }
+  } // testEmpty()
   
   /**
    * A really simple test.  Add an element and make sure that it's there.

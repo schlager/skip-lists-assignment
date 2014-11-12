@@ -52,7 +52,7 @@ public class SkipList<T extends Comparable<T>>
 
       for (int j = 0; j < n; j++)
         next[j] = null;
-    }
+    } // Node(T, int)
   } // class Node
 
   // +--------------+----------------------------------------------------
@@ -65,15 +65,15 @@ public class SkipList<T extends Comparable<T>>
     this.p = .5;
     this.size = 0;
     this.header = new Node<T>(null, maxLevel);
-  }
-  
+  } // SkipList()
+
   public SkipList(int pValue)
   {
     this.maxLevel = 20;
     this.p = pValue;
     this.size = 0;
     this.header = new Node<T>(null, maxLevel);
-  }
+  } // SkipList(int)
 
   // +-------------------------+-----------------------------------------
   // | Internal Helper Methods |
@@ -89,7 +89,7 @@ public class SkipList<T extends Comparable<T>>
       level++;
 
     return Math.min(level, this.maxLevel);
-  }
+  } // randomLevel()
 
   // +-----------------------+-------------------------------------------
   // | Methods from Iterable |
@@ -161,13 +161,13 @@ public class SkipList<T extends Comparable<T>>
                && current.next[level].val.compareTo(val) < 0)
           current = current.next[level];
         update[level] = current;
-      }
-      
+      } // for
+
     current = current.next[0];
-    
+
     if (current != null && current.val.equals(val))
       return;
-    
+
     newLevel = randomLevel();
     newNode = new Node<T>(val, newLevel);
 
@@ -175,7 +175,7 @@ public class SkipList<T extends Comparable<T>>
       {
         newNode.next[level] = update[level].next[level];
         update[level].next[level] = newNode;
-      }
+      } // for
     this.size++;
   } // add(T val)
 
@@ -221,10 +221,10 @@ public class SkipList<T extends Comparable<T>>
                && current.next[level].val.compareTo(val) < 0)
           current = current.next[level];
         update[level] = current;
-      }
+      } // for
 
     current = current.next[0];
-    
+
     if (current != null && current.val.compareTo(val) == 0)
       {
         for (int level = 0; level < current.level; level++)
@@ -232,8 +232,8 @@ public class SkipList<T extends Comparable<T>>
             if (update[level].next[level] != current)
               break;
             update[level].next[level] = current.next[level];
-          }
-      }
+          } // for
+      } // if
     this.size--;
   } // remove(T)
 
@@ -258,16 +258,18 @@ public class SkipList<T extends Comparable<T>>
       {
         if (current.next[0] != null)
           current = current.next[0];
-      }
-    
+      } // for 
+
     if (current == null)
       return null;
-    
+
     return current.val;
   } // get(int)
 
   /**
    * Determine the number of elements in the collection.
+   * 
+   * Sam said we would get extra credit for doing this.
    */
   public int length()
   {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Problem 4:	
 	SortedLinkedList
 	                 add/1   index iterate   add/2   rem/1   rem/2   total
@@ -22,6 +23,31 @@ Problem 4:
 		Round 18      380       0       1    1068       1       0    1450
 		Round 19      454       0       0    1091       1       0    1546
 		Average       399       0       0    1028       1       0    1429
+=======
+SortedLinkedList
+                    add/1   index iterate   add/2   rem/1   rem/2   total
+	Round  0      382       0       5    1014       9       4    1410
+	Round  1      378       0       1    1052       6       2    1437
+	Round  2      402       0       0     954       1       0    1357
+	Round  3      466       0       0     951       1       0    1418
+	Round  4      509       0       0    1071       1       0    1581
+	Round  5      429       0       0     969       1       0    1399
+	Round  6      371       0       0    1041       1       0    1413
+	Round  7      354       0       0     996       1       1    1351
+	Round  8      319       0       0    1005       1       1    1325
+	Round  9      348       0       0    1100       1       0    1449
+	Round 10      405       0       0    1145       1       1    1551
+	Round 11      453       0       0    1010       1       0    1464
+	Round 12      502       0       0    1017       1       0    1520
+	Round 13      441       0       0     986       1       0    1428
+	Round 14      380       0       0    1016       1       1    1397
+	Round 15      363       0       0    1040       1       0    1404
+	Round 16      329       0       1    1010       1       1    1341
+	Round 17      325       0       0    1024       5       1    1354
+	Round 18      380       0       1    1068       1       0    1450
+	Round 19      454       0       0    1091       1       0    1546
+	Average       399       0       0    1028       1       0    1429
+>>>>>>> ea51a7a8aa88a0015c8bd490a1fff12ab086175d
 
 	SortedArrayList
 			          add/1   index iterate   add/2   rem/1   rem/2   total
@@ -71,6 +97,7 @@ Problem 4:
 		Round 19       19       0       2      30      18       6      69
 		Average        22       0       1      29      18       6      71
 
+<<<<<<< HEAD
 	Analysis
 		Looking at overall performance we see that SkipList is significantly faster than either SortedArrayList or SortedLinkedList.  SortedLinkedList is incredibly slow, nearly 5 times as slow as SortedArrayList which is itself approximately 5 times slower than SkipList.  These differences in run times are due to a number of factors:
 
@@ -97,6 +124,62 @@ Problem 4:
 
 			No Indexing:
 				Now we also have the choice of using SkipList.  Again, if we are mostly going to be using remove SortedLinkedList is best.  Otherwise SkipList is better than SortedArrayList in nearly every way.  The only other situation where SkipList wouldn't be as efficient, would be if you were just going to be iterating through the list.  In this case SortedArrayList would again be best.
+=======
+Analysis
+	Looking at overall performance we see that SkipList is significantly 
+	faster than either SortedArrayList or SortedLinkedList.  SortedLinkedList 
+	is incredibly slow, nearly 5 times as slow as SortedArrayList which is 
+	itself approximately 5 times slower than SkipList.  These differences in 
+	run times are due to a number of factors:
+
+	add/1:
+		The times for add/1 are very similar for SkipList and SortedArrayList, 
+		ranging anywhere from 18 to 56 for SkipList and 39 to 65 for SortedArrayList.  
+		SortedLinkedList is incredibly slow with times ranging from 319 - 509.
+
+	add/2:
+		For SkipList, adding odds increased the run time by a very small amount in 
+		comparison to adding evens.  It even decreased run time by 15 in one case.  
+		In general there was an increase of about 10.  SortedArrayList slowed down 
+		enormously in add/2 compared to add/1, increasing in run time by an average 
+		of 300%.  SortedLinkedList also increased by about 300%.
+
+	remove/1:
+		SortedLinkedList removed elements amazingly fast with a minimum time of 1 
+		and maximum time of 9.  SkipList stayed within the range of its run times 
+		for add/1 and add/2 with a maximum time of 34 and minimum time of 16.  
+		SortedArrayList was by far the slowest with a run time of 9.5 times slower 
+		than that of SkipList.
+
+	remove/2:
+		The times for remove/2 were much faster in all procedures.  This is because 
+		we are just iterating through a list one element at a time, removing each 
+		element as we go, rather than selectively removing only odd elements from 
+		a mized List.
+
+	Iterate:
+		The iteration times for SortedLinkedList and SortedArrayList were virtually 
+		identical with the majority of times being 0 and only one outlier above 1.  
+		SkipList was noticibly slower with a run time hovering around 2.
+
+	Situational Usage:
+		If we need indexing we cannot use our implementation of SkipList.  However, 
+		if we do not need indexing, there are a couple of different factors that 
+		determine our choice.  
+
+		Indexing:
+			If we will mostly be using the remove procedure then SortedLinkedList 
+			is by far the most efficient.  For any other situation SortedArrayList 
+			is best.
+
+		No Indexing:
+			Now we also have the choice of using SkipList.  Again, if we are mostly 
+			going to be using remove SortedLinkedList is best.  Otherwise SkipList is 
+			better than SortedArrayList in nearly every way.  The only other situation 
+			where SkipList wouldn't be as efficient, would be if you were just going to 
+			be iterating through the list.  In this case SortedArrayList would again be 
+			best.
+>>>>>>> ea51a7a8aa88a0015c8bd490a1fff12ab086175d
 
 Problem 5:
 	In SortedArrayList.java, the findIndex method uses a version of pseudo-sort to locate the index of a given element.  Instead of sorting the elements in SortedArrayList with respect to other elements in the list, we are sorting them with respect to an element that's given as a parameter and is not necessarily in the list.  It returns either the index of the value in the list or the index where val would go if it was in the list.  We could use this any time we have an array-like structure and we need to find or insert specific elements in a particular order.
